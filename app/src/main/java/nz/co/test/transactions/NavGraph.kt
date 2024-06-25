@@ -4,6 +4,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import nz.co.test.transactions.ui.TransactionDetailScreen
 import nz.co.test.transactions.ui.TransactionListScreen
 import nz.co.test.transactions.viewModel.TransactionViewModel
 
@@ -21,7 +22,7 @@ fun NavGraph(viewModel: TransactionViewModel) {
                 val transactions = viewModel.transactions.collectAsState().value
                 val transaction = transactions.find { it.id == id }
                 transaction?.let {
-
+                    TransactionDetailScreen(it)
                 }
             }
         }
