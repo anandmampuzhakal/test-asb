@@ -5,7 +5,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import nz.co.test.transactions.ui.model.TransactionDisplayData
 import nz.co.test.transactions.ui.utils.DetailItem
@@ -26,7 +28,12 @@ fun TransactionDetailScreen(transactionDisplayData: TransactionDisplayData) {
                 .padding(paddingValues),
             color = MaterialTheme.colors.background
         ) {
-            DetailItemsColumn(transactionDisplayData)
+            //Todo need to modify the logic
+            if (transactionDisplayData != null) {
+                DetailItemsColumn(transactionDisplayData)
+            } else {
+                EmptyTransactionView()
+            }
         }
     }
 }
@@ -54,4 +61,9 @@ private fun DetailItemsColumn(transactionDisplayData: TransactionDisplayData) {
     }
 }
 
-
+@Composable
+private fun EmptyTransactionView() {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Text("No transaction details available", style = MaterialTheme.typography.h6, color = Color.Gray)
+    }
+}
