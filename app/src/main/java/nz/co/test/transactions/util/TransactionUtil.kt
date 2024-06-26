@@ -8,6 +8,7 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 object TransactionUtil {
+    private const val GST_PER = "0.15"
     fun getParsedDate(transactionDate: String): OffsetDateTime? {
         return try {
             val localDateTime =
@@ -24,7 +25,7 @@ object TransactionUtil {
     }
 
     fun calculateGST(amount: BigDecimal): String {
-        val gst = amount * BigDecimal("0.15")
+        val gst = amount * BigDecimal(GST_PER)
         return gst.setScale(2, RoundingMode.HALF_UP).toPlainString()
     }
 }
