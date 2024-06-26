@@ -8,7 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import nz.co.test.transactions.R
 import nz.co.test.transactions.ui.model.TransactionDisplayData
 import nz.co.test.transactions.ui.component.DetailItem
 
@@ -46,16 +48,16 @@ private fun DetailItemsColumn(transactionDisplayData: TransactionDisplayData) {
             .padding(horizontal = 16.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        DetailItem(label = "Transaction ID:", value = transactionDisplayData.id.toString())
-        DetailItem(label = "Date:", value = transactionDisplayData.date)
-        DetailItem(label = "Summary:", value = transactionDisplayData.summary)
+        DetailItem(label = stringResource(R.string.transaction_id), value = transactionDisplayData.id.toString())
+        DetailItem(label = stringResource(R.string.date), value = transactionDisplayData.date)
+        DetailItem(label = stringResource(R.string.summary), value = transactionDisplayData.summary)
         DetailItem(
-            label = "Amount:",
+            label = stringResource(R.string.amount),
             value = transactionDisplayData.amountText,
             valueColor = transactionDisplayData.amountColor
         )
         DetailItem(
-            label = "GST:",
+            label = stringResource(R.string.gst),
             value = "$${transactionDisplayData.gst}"
         )
     }
@@ -64,6 +66,6 @@ private fun DetailItemsColumn(transactionDisplayData: TransactionDisplayData) {
 @Composable
 private fun EmptyTransactionView() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("No transaction details available", style = MaterialTheme.typography.h6, color = Color.Gray)
+        Text(text = stringResource(R.string.no_transaction_details_available), style = MaterialTheme.typography.h6, color = Color.Gray)
     }
 }
