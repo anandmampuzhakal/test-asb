@@ -17,17 +17,6 @@ data class Transaction(
     val credit: BigDecimal
 )
 
-//Todo We can move this logics in another units class later.
-fun Transaction.getParsedDate(): OffsetDateTime? {
-    return try {
-        // First parse as LocalDateTime since there's no offset in your string
-        val localDateTime = LocalDateTime.parse(transactionDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-        // Convert LocalDateTime to OffsetDateTime, assuming UTC (+00:00) as there's no offset specified
-        OffsetDateTime.of(localDateTime, ZoneOffset.UTC)
-    } catch (e: Exception) {
-        null  // Handle exception possibly by logging
-    }
-}
 fun Transaction.prepareDisplayData(): TransactionDisplayData {
     val isDebit = this.debit > BigDecimal.ZERO
     val amountColor = if (isDebit) Color.Red else Color.Green
