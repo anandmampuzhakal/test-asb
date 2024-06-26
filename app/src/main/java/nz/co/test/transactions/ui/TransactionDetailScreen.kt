@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import nz.co.test.transactions.ui.model.TransactionDisplayData
-import nz.co.test.transactions.ui.utils.DetailItem
+import nz.co.test.transactions.ui.component.DetailItem
 
 @Composable
 fun TransactionDetailScreen(transactionDisplayData: TransactionDisplayData) {

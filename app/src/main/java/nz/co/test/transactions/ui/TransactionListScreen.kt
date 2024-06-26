@@ -8,7 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import nz.co.test.transactions.ui.utils.TransactionItem
+import nz.co.test.transactions.ui.component.TransactionItem
 import nz.co.test.transactions.viewModel.TransactionViewModel
 
 @Composable

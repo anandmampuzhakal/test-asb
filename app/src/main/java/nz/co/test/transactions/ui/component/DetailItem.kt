@@ -1,4 +1,4 @@
-package nz.co.test.transactions.ui.utils
+package nz.co.test.transactions.ui.component
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
