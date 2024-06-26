@@ -36,6 +36,7 @@ android {
 }
 
 dependencies {
+    debugImplementation 'androidx.compose.ui:ui-tooling:1.6.8'
     def hilt_version = '2.51.1'
     def kotlin_version = '1.8.0' // This is corrected to a real version number
     def retrofit_version = '2.11.0'

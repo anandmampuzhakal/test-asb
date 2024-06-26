@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -25,5 +26,13 @@ fun DetailItem(label: String, value: String, valueColor: Color = MaterialTheme.c
             style = MaterialTheme.typography.body1,
             color = valueColor
         )
+    }
+}
+
+@Preview(showBackground = true, name = "Detail Item Preview")
+@Composable
+fun PreviewDetailItem() {
+    MaterialTheme {
+        DetailItem(label = "Example Label:", value = "Example Value", valueColor = MaterialTheme.colors.error)
     }
 }
