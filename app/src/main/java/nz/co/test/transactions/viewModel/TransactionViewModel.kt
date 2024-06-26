@@ -1,6 +1,5 @@
 package nz.co.test.transactions.viewModel
 
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,7 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import nz.co.test.transactions.repo.TransactionRepository
-import nz.co.test.transactions.services.prepareDisplayData
+import nz.co.test.transactions.repo.bo.prepareDisplayData
 import nz.co.test.transactions.ui.model.TransactionDisplayData
 import javax.inject.Inject
 
@@ -24,7 +23,8 @@ class TransactionViewModel @Inject constructor(
     }
 
     fun loadTransactions() = viewModelScope.launch {
-        val rawTransactions = repository.getTransactions().sortedByDescending { it.transactionDate }
-        _transactions.value = rawTransactions.map { it.prepareDisplayData() }
+        val rawTransactions = repository.getTransactions().map { it.prepareDisplayData()}
+        _transactions.value = rawTransactions
     }
+
 }

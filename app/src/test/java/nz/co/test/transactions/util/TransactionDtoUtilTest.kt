@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
-class TransactionUtilTest {
+class TransactionDtoUtilTest {
 
     @Test
     fun testGetParsedDate_ValidDate() {
