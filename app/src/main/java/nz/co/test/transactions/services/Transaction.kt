@@ -2,8 +2,8 @@ package nz.co.test.transactions.services
 
 import androidx.compose.ui.graphics.Color
 import nz.co.test.transactions.ui.model.TransactionDisplayData
+import nz.co.test.transactions.util.TransactionUtil
 import java.math.BigDecimal
-import java.math.RoundingMode
 import java.time.LocalDateTime
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
@@ -28,21 +28,18 @@ fun Transaction.getParsedDate(): OffsetDateTime? {
         null  // Handle exception possibly by logging
     }
 }
-
 fun Transaction.prepareDisplayData(): TransactionDisplayData {
-    // Determine if the transaction is primarily a credit or a debit.
     val isDebit = this.debit > BigDecimal.ZERO
     val amountColor = if (isDebit) Color.Red else Color.Green
-    // Ensure the text reflects the dominant transaction type.
-    val amountText = if (isDebit) "-${this.debit}" else "+${this.credit}"
-    val gst = (if (isDebit) this.debit else this.credit) * BigDecimal("0.15")
-    val parsedDate = this.getParsedDate()?.format(DateTimeFormatter.ISO_LOCAL_DATE) ?: "Invalid date"
+    val amountText = TransactionUtil.getAmountText(this.debit, this.credit)
+    val gst = TransactionUtil.calculateGST(if (isDebit) this.debit else this.credit)
+    val parsedDate = TransactionUtil.getParsedDate(this.transactionDate)?.format(DateTimeFormatter.ISO_LOCAL_DATE) ?: "Invalid date"
 
     return TransactionDisplayData(
         id = this.id,
         summary = this.summary,
         amountText = amountText,
-        gst = gst.setScale(2, RoundingMode.HALF_UP).toPlainString(),
+        gst = gst,
         date = parsedDate,
         amountColor = amountColor
     )

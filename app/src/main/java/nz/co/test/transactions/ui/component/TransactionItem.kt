@@ -9,7 +9,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nz.co.test.transactions.R
 import nz.co.test.transactions.ui.model.TransactionDisplayData
@@ -35,5 +37,25 @@ fun TransactionItem(transaction: TransactionDisplayData, onClick: () -> Unit) {
                 text = stringResource(R.string.label_date_format, transaction.date)
             )
         }
+    }
+}
+
+// Preview of TransactionItem
+@Preview(showBackground = true)
+@Composable
+fun PreviewTransactionItem() {
+    // Sample data for the preview
+    val sampleTransaction = TransactionDisplayData(
+        id = 1,
+        summary = "Coffee Purchase",
+        amountText = "-$4.50",
+        gst = "0.68",
+        date = "2023-06-26",
+        amountColor = Color.Red
+    )
+
+    // Theme wrapper to apply correct Material theme
+    MaterialTheme {
+        TransactionItem(transaction = sampleTransaction, onClick = {})
     }
 }
