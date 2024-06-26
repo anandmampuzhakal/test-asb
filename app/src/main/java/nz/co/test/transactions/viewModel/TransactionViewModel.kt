@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import nz.co.test.transactions.repo.TransactionRepository
@@ -16,15 +17,29 @@ class TransactionViewModel @Inject constructor(
     private val repository: TransactionRepository
 ) : ViewModel() {
     private val _transactions = MutableStateFlow<List<TransactionDisplayData>>(emptyList())
-    val transactions = _transactions.asStateFlow()
+    val transactions: StateFlow<List<TransactionDisplayData>> = _transactions.asStateFlow()
+
+    private val _transactionDetailState = MutableStateFlow<TransactionDetailState>(TransactionDetailState.Empty)
+    val transactionDetailState: StateFlow<TransactionDetailState> = _transactionDetailState.asStateFlow()
 
     init {
         loadTransactions()
     }
 
     fun loadTransactions() = viewModelScope.launch {
-        val rawTransactions = repository.getTransactions().map { it.prepareDisplayData()}
+        val rawTransactions = repository.getTransactions().map { it.prepareDisplayData() }
         _transactions.value = rawTransactions
     }
 
+    fun selectTransaction(transactionId: Int) {
+        val transaction = _transactions.value.find { it.id == transactionId }
+        _transactionDetailState.value = transaction?.let {
+            TransactionDetailState.Detail(it)
+        } ?: TransactionDetailState.Empty
+    }
+
+    sealed class TransactionDetailState {
+        object Empty : TransactionDetailState()
+        data class Detail(val transaction: TransactionDisplayData) : TransactionDetailState()
+    }
 }

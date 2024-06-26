@@ -1,6 +1,5 @@
 package nz.co.test.transactions
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -18,12 +17,8 @@ fun NavGraph(viewModel: TransactionViewModel) {
         composable("transactionDetail/{transactionId}") { backStackEntry ->
             val transactionId = backStackEntry.arguments?.getString("transactionId")?.toIntOrNull()
             transactionId?.let { id ->
-                // Use collectAsState() to observe changes and allow recomposition
-                val transactions = viewModel.transactions.collectAsState().value
-                val transaction = transactions.find { it.id == id }
-                transaction?.let {
-                    TransactionDetailScreen(it)
-                }
+                viewModel.selectTransaction(id)
+                TransactionDetailScreen(viewModel)
             }
         }
     }
