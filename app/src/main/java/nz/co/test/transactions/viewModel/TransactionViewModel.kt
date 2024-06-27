@@ -3,6 +3,7 @@ package nz.co.test.transactions.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,11 +23,17 @@ class TransactionViewModel @Inject constructor(
     private val _transactionDetailState = MutableStateFlow<TransactionDetailState>(TransactionDetailState.Empty)
     val transactionDetailState: StateFlow<TransactionDetailState> = _transactionDetailState.asStateFlow()
 
+    //Todo modify later
+    private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+        _transactionDetailState.value = TransactionDetailState.Empty
+        println("Error occurred: ${exception.localizedMessage}")
+    }
+
     init {
         loadTransactions()
     }
 
-    fun loadTransactions() = viewModelScope.launch {
+    fun loadTransactions() = viewModelScope.launch(exceptionHandler) {
         val rawTransactions = repository.getTransactions().map { it.prepareDisplayData() }
         _transactions.value = rawTransactions
     }
